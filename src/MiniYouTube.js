@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import exampleresponse from "./exampleresponse.json";
+import React, { useState } from 'react';
+import exampleresponse from './exampleresponse.json';
 import Button from '@material-ui/core/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AddVideoForm from './AddVideoForm';
@@ -30,15 +30,17 @@ const MiniYouTube = () => {
   };
 
   const addNewVideo = (title, url) => {
-    const regExp = /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+    const regExp =
+      /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
     const match = url.match(regExp);
     if (title === '') {
       alert('Title should not be empty!');
     } else if (url === '') {
       alert('You have not entered a url!');
     } else if (!match) {
-      alert('Invalid url!')
-    } else setVideos([...videos, { id: '', title: title, url: url, rating: 0 }]);
+      alert('Invalid url!');
+    } else
+      setVideos([...videos, { id: '', title: title, url: url, rating: 0 }]);
   };
 
   const incrementRating = (e) => {
@@ -67,11 +69,16 @@ const MiniYouTube = () => {
     (a, b) => parseFloat(b.rating) - parseFloat(a.rating)
   );
   return (
-    <div key='main-wrapper'> 
+    <div key='main-wrapper'>
       <div key='buttonAndSearch' className='add-button-and-search-wrapper'>
         <header className='App-header'>
           <div>
-            <Button className='ascending' onClick={ascendingOrder} variant='contained' color='default'>
+            <Button
+              className='ascending'
+              onClick={ascendingOrder}
+              variant='contained'
+              color='default'
+            >
               Ascending
             </Button>
           </div>
@@ -79,7 +86,12 @@ const MiniYouTube = () => {
             <h1>Video Recommendation</h1>
           </div>
           <div>
-            <Button className='descending' onClick={descendingOrder} variant='contained' color='default'>
+            <Button
+              className='descending'
+              onClick={descendingOrder}
+              variant='contained'
+              color='default'
+            >
               Descending
             </Button>
           </div>
@@ -97,51 +109,60 @@ const MiniYouTube = () => {
           />
         </div>
       </div>
-    <div className="display-wrapper">
-      {videos.map((video) => {
-        const video_id = video.url.split('v=')[1];
-        return (
-          <div className="video-and-title">
-            <div title-div>
-              <h4 className='title'>{video.title}</h4>
-            </div>
-            <div className="video-container">
-              <iframe width="458" height="315" src={"https://www.youtube.com/embed/"+video_id} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-            </div>
-            <h4>Votes: {video.rating}</h4>
-            <div className='buttons-container'>
-              <ThumbDownAltTwoToneIcon id={video.id}
-                onClick={decrementRating}
-                className='dislike'
-                fontSize='large'
-                aria-hidden='false'
-                variant='contained'
-                style={{ color: 'antiquewhite' }}
-              />
-
-              <Button id={video.id}
-                onClick={videoRemover}
-                variant="contained"
-                color="secondary"
-                className='delete-button'
-                startIcon={<DeleteIcon />}
-              >
-                Delete
+      <div className='main-container'>
+        {videos.map((video) => {
+          const video_id = video.url.split('v=')[1];
+          return (
+            <div className='video-and-details-wrapper'>
+              <div title-div>
+                <h4 className='video-title'>{video.title}</h4>
+              </div>
+              <div className='video-container'>
+                <iframe
+                  width='458'
+                  height='315'
+                  src={'https://www.youtube.com/embed/' + video_id}
+                  title='YouTube video player'
+                  frameBorder='0'
+                  allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+                  allowFullScreen
+                ></iframe>
+              </div>
+              <h5>Votes: {video.rating}</h5>
+              <div className='buttons-container'>
+                <ThumbDownAltTwoToneIcon
+                  id={video.id}
+                  onClick={decrementRating}
+                  className='dislike'
+                  fontSize='large'
+                  variant='contained'
+                  style={{ color: 'antiquewhite' }}
+                />
+                <Button
+                  id={video.id}
+                  onClick={videoRemover}
+                  variant='contained'
+                  color='secondary'
+                  className='delete-button'
+                  startIcon={<DeleteIcon />}
+                >
+                  Delete
                 </Button>
-              <ThumbUpAltTwoToneIcon id={video.id}
-                onClick={incrementRating}
-                className='like'
-                fontSize='large'
-                aria-hidden='false'
-                variant='contained'
-              />
+                <ThumbUpAltTwoToneIcon
+                  id={video.id}
+                  onClick={incrementRating}
+                  className='like'
+                  fontSize='large'
+                  variant='contained'
+                  style={{ color: 'antiquewhite' }}
+                />
+              </div>
             </div>
-          </div>
-        );
-      })}
-    </div>
+          );
+        })}
+      </div>
     </div>
   );
-}
+};
 
 export default MiniYouTube;
