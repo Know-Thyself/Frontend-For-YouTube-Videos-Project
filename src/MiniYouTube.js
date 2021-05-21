@@ -43,25 +43,18 @@ const MiniYouTube = () => {
       setVideos([...videos, { id: '', title: title, url: url, rating: 0 }]);
   };
 
-  const incrementRating = (e) => {
-    const id = e.target.parentElement.id;
-    const likedVideo = videos.find((video) => video.id.toString() === id);
-    likedVideo.rating = likedVideo.rating + 1;
-    const i = videos.findIndex((video) => video.id === likedVideo.id);
-    let newArray = [...videos];
-    newArray[i] = likedVideo;
-    setVideos(newArray);
-  };
+  const incrementRating = (likedVideo, rating) => {
+    const updatedVideo = { ...likedVideo, rating: rating + 1 }
+    const notToBeUpdated = videos.filter(video => video !== likedVideo);
+    return setVideos([...notToBeUpdated, updatedVideo]);
+  }
 
-  const decrementRating = (e) => {
-    const id = e.target.parentElement.id;
-    const dislikedVideo = videos.find((video) => video.id.toString() === id);
-    dislikedVideo.rating = dislikedVideo.rating - 1;
-    const i = videos.findIndex((video) => video.id === dislikedVideo.id);
-    let newArray = [...videos];
-    newArray[i] = dislikedVideo;
-    setVideos(newArray);
-  };
+  const decrementRating = (likedVideo, rating) => {
+    const updatedVideo = { ...likedVideo, rating: rating - 1 }
+    const notToBeUpdated = videos.filter(video => video !== likedVideo);
+    return setVideos([...notToBeUpdated, updatedVideo]);
+  }
+
   const ascendingOrder = videos.sort(
     (a, b) => parseFloat(a.rating) - parseFloat(b.rating)
   );
@@ -132,7 +125,7 @@ const MiniYouTube = () => {
               <div className='buttons-container'>
                 <ThumbDownAltTwoToneIcon
                   id={video.id}
-                  onClick={decrementRating}
+                  onClick={() => decrementRating(video, video.rating)}
                   className='dislike'
                   fontSize='large'
                   variant='contained'
@@ -150,7 +143,7 @@ const MiniYouTube = () => {
                 </Button>
                 <ThumbUpAltTwoToneIcon
                   id={video.id}
-                  onClick={incrementRating}
+                  onClick={() => incrementRating(video, video.rating)}
                   className='like'
                   fontSize='large'
                   variant='contained'
