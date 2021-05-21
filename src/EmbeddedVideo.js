@@ -14,6 +14,6 @@ const EmbeddedVideo = ({id}) => {
       ></iframe>
     </div>
   );
-}
+};
 
 export default EmbeddedVideo;

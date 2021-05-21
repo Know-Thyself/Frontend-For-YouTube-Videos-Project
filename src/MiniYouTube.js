@@ -68,7 +68,7 @@ const MiniYouTube = () => {
     <div key='main-wrapper'>
       <div key='buttonAndSearch' className='add-button-and-search-wrapper'>
         <header className='App-header'>
-          <div>
+          <div key='asc-order'>
             <Button
               className='ascending'
               onClick={() => ascendingOrder()}
@@ -78,10 +78,10 @@ const MiniYouTube = () => {
               Ascending
             </Button>
           </div>
-          <div>
+          <div key='header'>
             <h1>Video Recommendation</h1>
           </div>
-          <div>
+          <div key='desc-order'>
             <Button
               className='descending'
               onClick={() => descendingOrder()}
@@ -109,7 +109,7 @@ const MiniYouTube = () => {
         {videos.map((video) => {
           const video_id = video.url.split('v=')[1];
           return (
-            <div className='video-and-details-wrapper'>
+            <div key={video.id} className='video-and-details-wrapper'>
               <Title title={video.title} />
               <EmbeddedVideo id={video_id} />
               <Votes vote={video.rating} />

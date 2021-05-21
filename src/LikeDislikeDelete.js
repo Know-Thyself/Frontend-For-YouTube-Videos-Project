@@ -32,8 +32,8 @@ const LikeDislikeDelete = ({ video, rating, id, voteUpdater, videoRemover }) => 
         style={{ color: 'antiquewhite' }}
       />
     </div>
-  )
+  );
 
-}
+};
 
 export default LikeDislikeDelete;
