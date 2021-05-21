@@ -42,6 +42,7 @@ const MiniYouTube = () => {
     );
     setVideos(ascend)
   }
+
   const descendingOrder = () => {
     const descend = [...videos];
     descend.sort(
@@ -49,6 +50,7 @@ const MiniYouTube = () => {
     );
     setVideos(descend);
   }
+
   const voteUpdater = (videoObj, newVote) => {
     let updatedVideo = { ...videoObj, rating: newVote };
     let newData = [...videos];
@@ -69,7 +71,7 @@ const MiniYouTube = () => {
           <div>
             <Button
               className='ascending'
-              onClick={ascendingOrder}
+              onClick={() => ascendingOrder()}
               variant='contained'
               color='default'
             >
@@ -82,7 +84,7 @@ const MiniYouTube = () => {
           <div>
             <Button
               className='descending'
-              onClick={descendingOrder}
+              onClick={() => descendingOrder()}
               variant='contained'
               color='default'
             >
