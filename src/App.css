@@ -57,6 +57,7 @@ html, body {
 
 .search-input-wrapper {
  background-color: #6a6c86;
+ background-color: #100e26;
  color: silver;
  display: flex;
  width: 40%;
@@ -70,6 +71,7 @@ html, body {
 
 .search-bar {
   background-color: #6a6c86;
+  background-color: #100e26;
   color: silver;
   font-size: 1.25em;
   border-radius: 0.25em;
@@ -94,13 +96,16 @@ html, body {
   color: silver;
 }
 
-.video-and-title:last-child:nth-child(3n - 2) {
+.video-and-details-wrapper:last-child:nth-child(3n - 2) {
   grid-column-end: 3;
 }
 
-.rating {
+.video-title {
+  font-size: x-large;
+}
+.votes {
   margin-bottom: 2em;
-  font-weight: bold;
+  font-size: larger;
 }
 
 .buttons-container {
@@ -114,10 +119,10 @@ html, body {
   color: antiquewhite;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(auto, 1fr);
+  place-items: center;
   width: 95%;
   gap: 2em;
   margin: auto;
-  
 }
 
 .video-and-details-wrapper {
@@ -126,10 +131,7 @@ html, body {
   max-width: 458px;
   place-items: center;
   background-color: #1f213d;
-}
-
-.video-and-title:last-child:nth-child(3n - 2) {
-  grid-column-end: 3;
+  margin: auto;
 }
 
 .like,

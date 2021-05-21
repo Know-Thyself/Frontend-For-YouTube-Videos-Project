@@ -3,30 +3,22 @@ import exampleresponse from './exampleresponse.json';
 import Button from '@material-ui/core/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AddVideoForm from './AddVideoForm';
-import DeleteIcon from '@material-ui/icons/Delete';
-import ThumbUpAltTwoToneIcon from '@material-ui/icons/ThumbUpAltTwoTone';
-import ThumbDownAltTwoToneIcon from '@material-ui/icons/ThumbDownAltTwoTone';
+import Title from './Title';
+import EmbeddedVideo from './EmbeddedVideo';
+import Votes from './Votes';
+import LikeDislikeDelete from './LikeDislikeDelete';
 
 const MiniYouTube = () => {
   const [searchInput, setSearchInput] = useState([]);
   const [videos, setVideos] = useState(exampleresponse);
 
   const handleSearchInput = (e) => {
-    console.log(e.target.value);
     setSearchInput(e.target.value.toLowerCase());
     const searchResult = videos.filter((video) =>
       video.title.toLowerCase().includes(searchInput)
     );
     setVideos(searchResult);
     if (e.target.value === '') setVideos(exampleresponse);
-  };
-
-  const videoRemover = (e) => {
-    const toBeRemoved = e.target.parentElement.id;
-    const remainingVideos = videos.filter(
-      (video) => video.id.toString() !== toBeRemoved
-    );
-    return setVideos(remainingVideos);
   };
 
   const addNewVideo = (title, url) => {
@@ -43,24 +35,33 @@ const MiniYouTube = () => {
       setVideos([...videos, { id: '', title: title, url: url, rating: 0 }]);
   };
 
-  const incrementRating = (likedVideo, rating) => {
-    const updatedVideo = { ...likedVideo, rating: rating + 1 }
-    const notToBeUpdated = videos.filter(video => video !== likedVideo);
-    return setVideos([...notToBeUpdated, updatedVideo]);
+  const ascendingOrder = () => {
+    const ascend = [...videos];
+    ascend.sort(
+      (a, b) => parseFloat(a.rating) - parseFloat(b.rating)
+    );
+    setVideos(ascend)
+  }
+  const descendingOrder = () => {
+    const descend = [...videos];
+    descend.sort(
+      (a, b) => parseFloat(b.rating) - parseFloat(a.rating)
+    );
+    setVideos(descend);
+  }
+  const voteUpdater = (videoObj, newVote) => {
+    let updatedVideo = { ...videoObj, rating: newVote };
+    let newData = [...videos];
+    const i = newData.findIndex((video) => video.id === videoObj.id);
+    newData[i] = updatedVideo;
+    setVideos(newData);
   }
 
-  const decrementRating = (likedVideo, rating) => {
-    const updatedVideo = { ...likedVideo, rating: rating - 1 }
-    const notToBeUpdated = videos.filter(video => video !== likedVideo);
-    return setVideos([...notToBeUpdated, updatedVideo]);
+  const videoRemover = (id) => {
+    const remainingVideos = videos.filter(video => video.id !== id);
+    setVideos(remainingVideos);
   }
 
-  const ascendingOrder = videos.sort(
-    (a, b) => parseFloat(a.rating) - parseFloat(b.rating)
-  );
-  const descendingOrder = videos.sort(
-    (a, b) => parseFloat(b.rating) - parseFloat(a.rating)
-  );
   return (
     <div key='main-wrapper'>
       <div key='buttonAndSearch' className='add-button-and-search-wrapper'>
@@ -107,49 +108,10 @@ const MiniYouTube = () => {
           const video_id = video.url.split('v=')[1];
           return (
             <div className='video-and-details-wrapper'>
-              <div title-div>
-                <h4 className='video-title'>{video.title}</h4>
-              </div>
-              <div className='video-container'>
-                <iframe
-                  width='458'
-                  height='315'
-                  src={'https://www.youtube.com/embed/' + video_id}
-                  title='YouTube video player'
-                  frameBorder='0'
-                  allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-                  allowFullScreen
-                ></iframe>
-              </div>
-              <h5>Votes: {video.rating}</h5>
-              <div className='buttons-container'>
-                <ThumbDownAltTwoToneIcon
-                  id={video.id}
-                  onClick={() => decrementRating(video, video.rating)}
-                  className='dislike'
-                  fontSize='large'
-                  variant='contained'
-                  style={{ color: 'antiquewhite' }}
-                />
-                <Button
-                  id={video.id}
-                  onClick={videoRemover}
-                  variant='contained'
-                  color='secondary'
-                  className='delete-button'
-                  startIcon={<DeleteIcon />}
-                >
-                  Delete
-                </Button>
-                <ThumbUpAltTwoToneIcon
-                  id={video.id}
-                  onClick={() => incrementRating(video, video.rating)}
-                  className='like'
-                  fontSize='large'
-                  variant='contained'
-                  style={{ color: 'antiquewhite' }}
-                />
-              </div>
+              <Title title={video.title} />
+              <EmbeddedVideo id={video_id} />
+              <Votes vote={video.rating} />
+              <LikeDislikeDelete video={video} rating={video.rating} id={video.id} voteUpdater={voteUpdater} videoRemover={videoRemover} />
             </div>
           );
         })}
