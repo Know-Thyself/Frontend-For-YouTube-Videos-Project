@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import MiniYouTube from './MiniYouTube';
+import MiniYouTube from './YouTube.Videos';
 
 function App() {
   return (
