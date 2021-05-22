@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button } from '@material-ui/core';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const AddVideoForm = ({ addNewVideo }) => {
+const UploadVideoForm = ({ addNewVideo }) => {
   const [reveal, setReveal] = useState(false);
   const [title, setTitle] = useState('');
   const [url, setUrl] = useState('');
@@ -66,4 +66,4 @@ const AddVideoForm = ({ addNewVideo }) => {
   );
 };
 
-export default AddVideoForm;
+export default UploadVideoForm;

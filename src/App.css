@@ -147,7 +147,7 @@ html, body {
   background-color: crimson !important;
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (min-width: 360px)  and (max-width: 1024px) {
   .main-container {
     grid-template-columns: 1fr;
     grid-template-rows: repeat(1, 1fr);
@@ -165,13 +165,11 @@ html, body {
     max-width: fit-content;
   }
   .App-header {
-    display: inline-block;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    place-items: center;
     margin: auto;
     margin-bottom: 2em;
-  }
-  .title {
-    display: flex;
-    flex-wrap: wrap;
   }
 }
 

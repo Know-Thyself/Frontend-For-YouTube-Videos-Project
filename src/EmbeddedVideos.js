@@ -1,6 +1,6 @@
 import React from 'react';
 
-const EmbeddedVideo = ({id}) => {
+const EmbeddedVideos = ({id}) => {
   return (
     <div className='video-container'>
       <iframe
@@ -16,4 +16,4 @@ const EmbeddedVideo = ({id}) => {
   );
 };
 
-export default EmbeddedVideo;
+export default EmbeddedVideos;
