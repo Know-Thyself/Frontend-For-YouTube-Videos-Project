@@ -151,4 +151,4 @@ const YouTubeVideos = () => {
   );
 };
 
-export default MiniYouTube;
+export default YouTubeVideos;
