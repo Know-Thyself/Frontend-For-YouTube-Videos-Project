@@ -6,7 +6,7 @@ const Header = ({ ascendingOrder, descendingOrder }) => {
     <header className='App-header'>
       <div>
         <Button className='ascending' onClick={ascendingOrder} variant='contained' color='default'>
-          Ascending
+          Asc Order
         </Button>
       </div>
       <div>
@@ -14,7 +14,7 @@ const Header = ({ ascendingOrder, descendingOrder }) => {
       </div>
       <div>
         <Button className='descending' onClick={descendingOrder} variant='contained' color='default'>
-          Descending
+          Desc Order
         </Button>
       </div>
     </header>
