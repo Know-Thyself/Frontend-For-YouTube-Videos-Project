@@ -48,8 +48,9 @@ const YouTubeVideos = () => {
       alert('Title should not be empty!');
     } else if (url === '' || !match) {
       alert('Invalid url!');
-    } else
-      return setVideos([
+    } else {
+      let newArray = [...videos];
+      newArray = [
         {
           id: Date.now(),
           title: title,
@@ -57,29 +58,15 @@ const YouTubeVideos = () => {
           rating: 0,
           posted: new Date().toString(),
         },
-        ...videos,
-      ]);
+        ...newArray,
+      ];
+      return setVideos(newArray);
+    };
   };
 
   const stateUpdater = (updatedState) => {
     setVideos(updatedState);
   }
-
-  const voteUpdater = (videoObj, newVote) => {
-    let updatedVideo = { ...videoObj, rating: newVote };
-    let newData = [...videos];
-    const i = newData.findIndex((video) => video.id === videoObj.id);
-    newData[i] = updatedVideo;
-    setVideos(newData);
-
-    const requestBody = { id: videoObj.id, rating: newVote };
-    fetch('https://fullstackvideos.herokuapp.com/api', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(requestBody) })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data)
-      })
-      .catch((err) => console.log(err));
-  };
 
   const videoRemover = (id) => {
     const remainingVideos = videos.filter(
@@ -112,7 +99,7 @@ const YouTubeVideos = () => {
               <Title title={video.title} />
               <EmbeddedVideos id={video_id} />
               <Votes vote={video.rating} />
-              <LikeDislikeDeleteButtons video={video} rating={video.rating} id={video.id} voteUpdater={voteUpdater} videoRemover={videoRemover} />
+              <LikeDislikeDeleteButtons video={video} rating={video.rating} id={video.id} stateUpdater={stateUpdater} videoRemover={videoRemover} videos={backupVideos}/>
             </div>
           );
         })}

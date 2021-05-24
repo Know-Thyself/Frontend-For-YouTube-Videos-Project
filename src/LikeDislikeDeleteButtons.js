@@ -4,7 +4,22 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import ThumbUpAltTwoToneIcon from '@material-ui/icons/ThumbUpAltTwoTone';
 import ThumbDownAltTwoToneIcon from '@material-ui/icons/ThumbDownAltTwoTone';
 
-const LikeDislikeDeleteButtons = ({ video, rating, id, voteUpdater, videoRemover }) => {
+const LikeDislikeDeleteButtons = ({ videos, video, rating, id, stateUpdater, videoRemover }) => {
+  const voteUpdater = (videoObj, newVote) => {
+    let updatedVideo = { ...videoObj, rating: newVote };
+    let newData = [...videos];
+    const i = newData.findIndex((video) => video.id === videoObj.id);
+    newData[i] = updatedVideo;
+    stateUpdater(newData);
+
+    const requestBody = { id: videoObj.id, rating: newVote };
+    fetch('https://fullstackvideos.herokuapp.com/api', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(requestBody) })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data)
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <div className='buttons-container'>
       <ThumbDownAltTwoToneIcon
