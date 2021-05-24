@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import YouTubeVideos from './YouTube.Videos';
+import YouTubeVideos from './YouTubeVideos';
 
 function App() {
   return (
